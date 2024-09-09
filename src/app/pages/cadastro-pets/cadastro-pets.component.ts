@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogErrorComponent } from 'src/app/components/dialog-error/dialog-error.component';
 import { CadastroPetsService } from 'src/app/services/cadastro-pets.service';
+import { PetService } from 'src/app/services/pets.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { isHttpFailureResponse } from 'src/app/utils/error.validator';
 
@@ -17,13 +18,13 @@ export class CadastroPetsComponent implements OnInit {
   cadastroPetsForm: FormGroup;
   token: any;
 
-  constructor(private cadastroPetsService: CadastroPetsService, private router: Router,  private dialog: MatDialog) {
+  constructor(private petService: PetService, private router: Router,  private dialog: MatDialog) {
     this.cadastroPetsForm = new FormGroup({
       name: new FormControl(''),
       color: new FormControl('',),
       breed: new FormControl(''),
-      animalType: new FormControl(''),
-      birthdate: new FormControl(''),
+      petType: new FormControl(''),
+      birthDate: new FormControl(''),
     });
   }
 
@@ -39,39 +40,37 @@ export class CadastroPetsComponent implements OnInit {
   cadastrar() {
     if (this.cadastroPetsForm.valid) {
       const formValues = { ...this.cadastroPetsForm.value };
-  
-      this.cadastroPetsService.registerPet(formValues).subscribe({
+ 
+      
+      this.petService.registerPet(formValues).subscribe({
         next: (response) => {
           console.log('Pet cadastrado com sucesso', response);
-          this.redirect('pets')
+          this.redirect('pets');
         },
         error: (error) => {
           console.error('Erro ao cadastrar pet', error);
-
           
           let requestErrorMessage = error.message;
           if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
           }
+  
           const dialogRef = this.dialog.open(DialogErrorComponent, {
             width: '250px',
             data: { message: requestErrorMessage }
           });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              // this.router.navigate(['/login']);
-            }
+          dialogRef.afterClosed().subscribe(() => {
+            // Ações pós-diálogo, se necessário
           });
         }
       });
-    } else {
-      console.error('Formulário inválido');
-      
     }
   }
   
   redirect(route : string){
     this.router.navigate([route]);
   }
+
+  
 
 }

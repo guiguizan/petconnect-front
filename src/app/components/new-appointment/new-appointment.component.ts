@@ -43,6 +43,8 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['appointmentId'] && changes['appointmentId'].currentValue) {
+      console.log(changes)
+      console.log(changes['appointmentId'].currentValue)
       this.isEditMode = true;
       this.loadAppointment(changes['appointmentId'].currentValue);
       // this.loadAppointmentMock(changes['appointmentId'].currentValue);
@@ -70,6 +72,7 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
     
     this.petService.getAllPets().subscribe(
       (pets: any[]) => {
+        console.log(pets)
         this.pets = pets;
       },
       (error: any) => {
@@ -79,6 +82,7 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
   }
 
   loadAppointment(appointmentId: number): void {
+    console.log(appointmentId)
     this.appointmentService.getAppointmentById(appointmentId).subscribe(
       (appointment: any) => {
         this.appointmentForm.patchValue(appointment);
@@ -131,9 +135,9 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
   onSubmit() {
     if (this.appointmentForm.valid) {
       const newAppointment = {
-        ...this.appointmentForm.value,
-        endTime: this.endTime
+        ...this.appointmentForm.value
       };
+      console.log(newAppointment)
 
       if (this.isEditMode && this.appointmentId) {
         this.appointmentService.updateAppointment(this.appointmentId, newAppointment).subscribe(

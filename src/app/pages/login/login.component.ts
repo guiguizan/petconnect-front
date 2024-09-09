@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from 'src/app/components/dialog/dialog.component';
 import { DialogErrorComponent } from 'src/app/components/dialog-error/dialog-error.component';
-import { isHttpFailureResponse } from 'src/app/utils/error.validator';
 
 @Component({
   selector: 'app-login',
@@ -21,13 +20,14 @@ export class LoginComponent implements OnInit {
   forgetPasswordForm: FormGroup;
 
   constructor(private usuarioService: UsuarioService, private router: Router, private dialog: MatDialog) {
+    // Ajustar cadastroForm para incluir os campos conforme o DTO InsertUserRequesterDto
     this.cadastroForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      nmUser: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, this.passwordStrengthValidator()]),
       confirmPassword: new FormControl('', [Validators.required]),
       cpf: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required])
+      phoneNumber: new FormControl('', [Validators.required])  // Este campo faz parte dos contatos
     }, { validators: this.passwordMatchValidator });
 
     this.loginForm = new FormGroup({
@@ -38,13 +38,46 @@ export class LoginComponent implements OnInit {
     this.forgetPasswordForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])
     });
+
+    this.cadastroForm.get('phoneNumber')?.valueChanges.subscribe(value => {
+      this.formatPhoneNumber(value);
+    });
   }
+
+  formatPhoneNumber(value: string) {
+    if (!value) return;
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 11) {
+      value = value.slice(0, 11); 
+    }
+
+    if (value.length <= 10) {
+      value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      value = value.replace(/(\d{2})(\d{5})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    }
+    this.cadastroForm.get('phoneNumber')?.setValue(value, { emitEvent: false });
+  }
+  
 
   ngOnInit(): void { }
 
   cadastrar() {
     if (this.cadastroForm.valid) {
-      this.usuarioService.registerUser(this.cadastroForm.value).subscribe({
+      // Ajustar os dados de cadastro para corresponder ao DTO InsertUserRequesterDto
+      const userData = {
+        nmUser: this.cadastroForm.value.nmUser,
+        email: this.cadastroForm.value.email,
+        password: this.cadastroForm.value.password,
+        cpf: this.cadastroForm.value.cpf,
+        contacts: [{ 
+          type: 'T', 
+          contactValue: this.cadastroForm.value.phoneNumber 
+        }]
+      };
+
+      this.usuarioService.registerUser(userData).subscribe({
         next: (response) => {
           this.errorMessage = null;
           this.cadastroForm.reset();
@@ -52,7 +85,7 @@ export class LoginComponent implements OnInit {
 
           const dialogRef = this.dialog.open(ConfirmDialog, {
             width: '250px',
-            data: { message: "Usuario cadastrado! Ralize seu login" }
+            data: { message: "Usuário cadastrado! Realize seu login" }
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -64,20 +97,7 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.error('Erro ao cadastrar usuário', error);
           this.errorMessage = 'Erro ao cadastrar usuário. Por favor, tente novamente.';
-
-          let requestErrorMessage = error.message;
-          if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
-          }
-          const dialogRef = this.dialog.open(DialogErrorComponent, {
-            width: '250px',
-            data: { message: requestErrorMessage }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.router.navigate(['/login']);
-            }
-          });
+          this.modalDeErro(error.error.fieldsMessage);
         }
       });
     }
@@ -89,16 +109,15 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
       };
-
+  
       this.usuarioService.loginUser(userData).subscribe({
         next: (response) => {
           if (response.token) {
             this.errorMessage = null;
-            localStorage.setItem('userId', response.token);
             localStorage.setItem('token', response.token);
-
+  
             const roles = response.roles;
-            if (roles.includes('ROLE_ADMIN')) {
+            if (roles && roles.some((role: any) => role.name === 'ROLE_ADMIN')) {
               localStorage.setItem('permission', 'ADMIN');
             } else {
               localStorage.setItem('permission', 'USER');
@@ -110,47 +129,18 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.error('Erro ao realizar login', error);
           this.errorMessage = 'Erro ao realizar login. Por favor, tente novamente.';
-          let requestErrorMessage = error.message;
-
-          if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
-          }
-          const dialogRef = this.dialog.open(DialogErrorComponent, {
-            width: '250px',
-            data: { message: requestErrorMessage }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.router.navigate(['/login']);
-            }
-          });
-
+          this.modalDeErro(error.error.details);
         }
       });
     }
   }
+  
 
   passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
   };
-
-  emailDomainValidator(domainName: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const email = control.value;
-      const domain = email.substring(email.lastIndexOf("@") + 1);
-      if (email === '' || domain.toLowerCase() === domainName.toLowerCase()) {
-        return null;
-      }
-      return { 'emailDomain': true };
-    };
-  }
-
-  esqueciSenha(isForgetPassword: boolean) {
-    this.errorMessage = null;
-    this.isForgetPassword = isForgetPassword;
-  }
 
   passwordStrengthValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -164,7 +154,7 @@ export class LoginComponent implements OnInit {
         return null;
       }
       return {
-        passwordStrength: '  Para sua segurança, sua senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais.'
+        passwordStrength: 'Para sua segurança, sua senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais.'
       };
     };
   }
@@ -197,22 +187,27 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.error('Erro ao enviar e-mail de recuperação de senha', error);
           this.errorMessage = 'Erro ao enviar e-mail de recuperação de senha. Por favor, tente novamente.';
-          let requestErrorMessage = error.message;
-
-          if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
-          }
-          const dialogRef = this.dialog.open(DialogErrorComponent, {
-            width: '250px',
-            data: { message: requestErrorMessage }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.router.navigate(['/login']);
-            }
-          });
+          this.modalDeErro(error.error.details);
         }
       });
     }
+  }
+
+  
+  esqueciSenha(isForgetPassword: boolean) {
+    this.errorMessage = null;
+    this.isForgetPassword = isForgetPassword;
+  }
+
+  modalDeErro(responseError: string) {
+    const dialogRef = this.dialog.open(DialogErrorComponent, {
+      width: '250px',
+      data: { message: responseError }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

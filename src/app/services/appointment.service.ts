@@ -6,36 +6,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'http://localhost:8888/api/v1/appointments'; // URL base da API
-  private adminApiUrl = 'http://localhost:8888/api/v1/admins/appointments'; // URL base para administradores
+  private apiUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/appointament';
+  private apiUrlUser = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/appointament/user';
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
 
   getAppointments(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/all`);
+    return this.http.get<any[]>(`${this.apiUrlUser}`);
   }
 
   getAppointmentById(appointmentId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${appointmentId}`);
+    return this.http.get<any>(`${this.apiUrl}/{id}?idAppointament=${appointmentId}`);
   }
 
   getAppointmentsByPet(petId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/pets/${petId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/pet/${petId}`);
   }
 
   scheduleAppointment(appointmentRequest: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/schedule`, appointmentRequest);
+    return this.http.post<any>(`${this.apiUrl}`, appointmentRequest);
   }
 
   updateAppointment(appointmentId: number, appointmentRequest: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${appointmentId}`, appointmentRequest);
+    return this.http.put<any>(`${this.apiUrl}/${appointmentId}`, appointmentRequest);
   }
 
   cancelAppointment(appointmentId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/cancel/${appointmentId}`);
-  }
-
-  getAdminAppointments(): Observable<any> {
-    return this.http.get<any>(`${this.adminApiUrl}/all`);
+    return this.http.delete<void>(`${this.apiUrl}/${appointmentId}`);
   }
 }

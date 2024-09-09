@@ -5,7 +5,6 @@ import { DialogErrorComponent } from 'src/app/components/dialog-error/dialog-err
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { isHttpFailureResponse } from 'src/app/utils/error.validator';
 
-
 @Component({
   selector: 'app-painel',
   templateUrl: './painel.component.html',
@@ -19,36 +18,33 @@ export class PainelComponent implements OnInit {
   filteredAppointments: any;
   isAdmin: boolean = false;
 
-
-  constructor(private appointmentService: AppointmentService, private router: Router  ,private dialog: MatDialog) { }
+  constructor(private appointmentService: AppointmentService, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const permissao = localStorage.getItem('permission');
     this.permissaoAdmin = permissao === 'ADMIN';
-    if(this.permissaoAdmin){
-      this.isAdmin = true
+    if (this.permissaoAdmin) {
+      this.isAdmin = true;
       this.loadAdminAppointments();
-    }else{
-      this.isAdmin = false
+    } else {
+      this.isAdmin = false;
       this.loadAppointments();
     }
-    
   }
-
 
   loadAdminAppointments() {
-    this.appointmentService.getAdminAppointments().subscribe(
+    this.appointmentService.getAppointments().subscribe(
       (data: any) => {
-        console.log(data)
-        this.appointments = data.content;
-        this.filterAppointments()
+        console.log(data);
+        this.appointments = data;
+        this.filterAppointments();
       },
       (error: any) => {
         console.error('Erro ao carregar agendamentos', error);
 
         let requestErrorMessage = error.message;
         if (isHttpFailureResponse(error)) {
-          requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+          requestErrorMessage = 'Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.';
         }
         const dialogRef = this.dialog.open(DialogErrorComponent, {
           width: '250px',
@@ -62,46 +58,20 @@ export class PainelComponent implements OnInit {
       }
     );
   }
-
-
 
   loadAppointments() {
-    // this.appointments = [
-    //   {
-    //     petId: 10,
-    //     userId: 10,
-    //     serviceType: "BATH_AND_GROOMING",
-    //     petType: "DOG",
-    //     appointmentDate:  new Date(2024, 4, 29, 8, 0),
-    //     appointmentTime: "10:00",
-    //     status: "SCHEDULED",
-    //     appointmentId: 10
-    //   },
-    //   {
-    //     petId: 10,
-    //     userId: 10,
-    //     serviceType: "BATH_AND_GROOMING",
-    //     petType: "DOG",
-    //     appointmentDate:  new Date(2024, 4, 28, 8, 0),
-    //     appointmentTime: "10:00",
-    //     status: "SCHEDULED",
-    //     appointmentId: 10
-    //   }
-    // ];
-    // this.filterAppointments()
-
     this.appointmentService.getAppointments().subscribe(
       (data: any[]) => {
-        console.log(data)
+        console.log(data);
         this.appointments = data;
-        this.filterAppointments()
+        this.filterAppointments();
       },
       (error: any) => {
         console.error('Erro ao carregar agendamentos', error);
 
         let requestErrorMessage = error.message;
         if (isHttpFailureResponse(error)) {
-          requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+          requestErrorMessage = 'Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.';
         }
         const dialogRef = this.dialog.open(DialogErrorComponent, {
           width: '250px',
@@ -115,13 +85,13 @@ export class PainelComponent implements OnInit {
       }
     );
   }
-  
+
   filterAppointments(): void {
     const allowedServices = ['BATH', 'BATH_AND_GROOMING', 'GROOMING'];
-    this.filteredAppointments = this.appointments.filter(appointment => 
+    this.filteredAppointments = this.appointments.filter(appointment =>
       allowedServices.includes(appointment.serviceType)
     );
-    console.log(this.filteredAppointments)
+    console.log(this.filteredAppointments);
   }
 
   filterVeterinarianAppointments(): void {
@@ -129,10 +99,8 @@ export class PainelComponent implements OnInit {
       appointment.serviceType === 'VETERINARIAN'
     );
   }
-  
 
-
-  logOut(){
+  logOut() {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     localStorage.removeItem('permission');
@@ -142,26 +110,24 @@ export class PainelComponent implements OnInit {
   setActive(index: number) {
     const permissao = localStorage.getItem('permission');
     this.permissaoAdmin = permissao === 'ADMIN';
-    if(this.permissaoAdmin){
-      this.isAdmin = true
+    if (this.permissaoAdmin) {
+      this.isAdmin = true;
       this.loadAdminAppointments();
-    }else{
-      this.isAdmin = false
+    } else {
+      this.isAdmin = false;
       this.loadAppointments();
     }
 
     this.activeItem = index;
-    
   }
 
   onEditAppointment(appointmentId: number) {
-    console.log(appointmentId)
+    console.log(appointmentId);
     this.selectedAppointmentId = appointmentId;
     this.setActive(2);
-
   }
-  
-  redirect(route : string){
+
+  redirect(route: string) {
     this.router.navigate([route]);
   }
 }

@@ -48,7 +48,7 @@ export class PerfilClienteComponent implements OnInit {
   }
 
   loadUserData(userId: any): void {
-    this.usuarioService.getUserById().subscribe({
+    this.usuarioService.getUser().subscribe({
       next: (userData) => {
         console.log(userData)
         this.userName = userData.username;
@@ -82,7 +82,7 @@ export class PerfilClienteComponent implements OnInit {
 
   updateUser(): void {
     if (this.userDataForm.valid) {
-      this.usuarioService.updateUser(this.userId, this.userDataForm.getRawValue()).subscribe({
+      this.usuarioService.updateUser( this.userDataForm.getRawValue()).subscribe({
         next: (response) => {
           console.log('Usuário atualizado com sucesso', response);
           const dialogRef = this.dialog.open(ConfirmDialog, {
@@ -139,7 +139,7 @@ export class PerfilClienteComponent implements OnInit {
   }
 
   deleteUser(): void {
-    this.usuarioService.deleteUser(this.userId).subscribe({
+    this.usuarioService.deleteUser().subscribe({
       next: () => {
         console.log('Usuário excluído com sucesso.');
         const dialogRef = this.dialog.open(ConfirmDialog, {

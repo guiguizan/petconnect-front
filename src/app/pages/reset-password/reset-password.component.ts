@@ -71,7 +71,7 @@ export class ResetPasswordComponent implements OnInit {
       const newPassword = this.cadastroForm.get('password')?.value;
       const confirmPassword = this.cadastroForm.get('confirmPassword')?.value;
       
-      this.usuarioService.confirmResetPassword(this.token, newPassword, confirmPassword).subscribe({
+      this.usuarioService.confirmResetPassword(this.token, newPassword).subscribe({
         next: (response) => {
           this.errorMessage = null;
           this.cadastroForm.reset();

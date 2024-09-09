@@ -8,67 +8,69 @@ import { tap } from 'rxjs/operators';
 })
 export class UsuarioService {
 
-  private baseUrl = 'http://localhost:8888/api/v1/users';
-  private registerUrl = `${this.baseUrl}/register`;
-  private loginUrl = 'http://localhost:8888/api/v1/auth/login';
-  private updatePasswordUrl = `${this.baseUrl}/update-password`;
-  private resetPasswordUrl = 'http://localhost:8888/api/v1/auth/reset-password';
-  private confirmResetPasswordUrl = 'http://localhost:8888/api/v1/auth/reset-password/confirm';
-
+  private baseUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/user';
+  private authUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/auth';
+  
   constructor(private http: HttpClient) { }
 
   registerUser(userData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post('http://localhost:8888/api/v1/auth/signup', userData, { headers });
+    return this.http.post(`${this.authUrl}/signup`, userData, { headers });
   }
 
   loginUser(userData: any): Observable<any> {
-    return this.http.post(this.loginUrl, userData).pipe(
+    return this.http.post(`${this.authUrl}/login`, userData).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.token);
       })
     );
   }
 
-  updateUser(userId: number, userData: any): Observable<any> {
+  updateUser(userData: any): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    return this.http.put(`${this.baseUrl}/update`, userData, { headers });
+    return this.http.put(`${this.baseUrl}`, userData, { headers });
   }
 
-  getUserById(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/me`);
+  getUser(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.get(`${this.baseUrl}`, { headers });
   }
 
-  deleteUser(userId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete`);
+  deleteUser(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.delete(`${this.baseUrl}`, { headers });
   }
 
   updatePassword(passwordData: any): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    return this.http.put(this.updatePasswordUrl, passwordData, { headers });
+    return this.http.put(`${this.baseUrl}/update-password`, passwordData, { headers });
   }
 
   resetPassword(emailData: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post(this.resetPasswordUrl, emailData, { headers });
+    return this.http.post(`${this.authUrl}/reset-password`, emailData, { headers });
   }
 
-  confirmResetPassword(token: string, newPassword: string, confirmPassword: string): Observable<any> {
+  confirmResetPassword(token: string, newPassword: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
-    const body = { newPassword, confirmPassword };
-    const url = `${this.confirmResetPasswordUrl}?token=${token}`;
-
+    const body = { newPassword };
+    const url = `${this.authUrl}/reset-password/confirm?token=${token}`;
     return this.http.post(url, body, { headers });
   }
 }

@@ -21,106 +21,70 @@ export class PerfilPetsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private petService: PetService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
-    // this.createPetDataForm();
-    // this.loadUserDataAndPets(1)
     const storedUserId = localStorage.getItem('token');
-
-    // this.pets = ['1', '2']
     if (storedUserId) {
       this.userId = storedUserId;
+      // Certifique-se de criar o formulário antes de carregar os dados
+      this.createPetDataForm();
       this.loadUserDataAndPets(1);
     } else {
       console.log('Nenhum userId encontrado no sessionStorage.');
     }
   }
-
+  
 
   createPetDataForm() {
     this.petDataForm = this.formBuilder.group({
       name: ['', Validators.required],
       breed: ['', Validators.required],
       color: ['', Validators.required],
-      animalType: ['', Validators.required],
-      birthdate: ['', Validators.required],
-      createdAt: [{value: '', disabled: true}],
-      updatedAt: [{value: '', disabled: true}]
+      petType: ['', Validators.required],
+      birthDate: ['', Validators.required],
     });
   }
 
   loadUserDataAndPets(userId: number): void {
-
-    // MOCK PARA PAGINA DE PERFIL PET COM DOIS PETS.
-    // const mockData = {
-    //   id: 1,
-    //   name: "Mirella Gabrielly da Rocha",
-    //   pets: [
-    //     {
-    //       id: 1,
-    //       name: "Rex",
-    //       breed: "Golden Retriever",
-    //       color: "Golden",
-    //       animalType: "Dog",
-    //       birthdate: "31/12/2020",
-    //       createdAt: "2024-04-15T13:15:39",
-    //       updatedAt: "2024-04-15T13:15:39"
-    //     },
-    //     {
-    //       id: 2,
-    //       name: "Fluffy",
-    //       breed: "Persian",
-    //       color: "White",
-    //       animalType: "Cat",
-    //       birthdate: "01/01/2021",
-    //       createdAt: "2024-04-15T13:20:00",
-    //       updatedAt: "2024-04-15T13:20:00"
-    //     }
-    //   ]
-    // }    
-    // this.pets = mockData.pets;
-    //   if (this.pets.length > 0) {
-    //       this.selectedPetIndex = 0;
-    //       this.populatePetDataForm(this.pets[this.selectedPetIndex]);
-    //     }
-    
-    this.petService.getAllPets().subscribe({
-      next: (data: any) => {
-        console.log(data)
-        this.pets = data || [];
-        console.log(this.pets)
-        if(this.pets){
-          if (this.pets.length > 0) {
-            this.selectedPetIndex = 0;
-            this.populatePetDataForm(this.pets[this.selectedPetIndex]);
+    this.petService.getAllPets().subscribe(
+      (data) => {
+        // Mapeia os tipos de animal para o formulário
+        this.pets = data.map(pet => {
+          let mappedType;
+          switch (pet.petType.toLowerCase()) {
+            case 'dog':
+            case 'cachorro':
+              mappedType = 'DOG';
+              break;
+            case 'cat':
+            case 'gato':
+              mappedType = 'CAT';
+              break;
+            default:
+              mappedType = 'OTHER';
           }
+          return {
+            ...pet,
+            petType: mappedType
+          };
+        });
+
+        if (this.pets.length > 0) {
+          this.selectedPetIndex = 0;
+          this.populatePetDataForm(this.pets[this.selectedPetIndex]);
         }
       },
-      error: (error: any) => {
-        console.error('Erro ao carregar os dados do usuário e pets', error);
-        
-        let requestErrorMessage = error.message;
-        if (isHttpFailureResponse(error)) {
-          requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
-        }
-        const dialogRef = this.dialog.open(DialogErrorComponent, {
-          width: '250px',
-          data: { message: requestErrorMessage }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // this.router.navigate(['/login']);
-          }
-        });
-
+      (error) => {
+        console.error(error);
       }
-    });
+    );
   }
 
   populatePetDataForm(pet: any): void {
-    this.petDataForm = this.formBuilder.group({
-      name: [pet.name, Validators.required],
-      breed: [pet.breed, Validators.required],
-      animalType: [pet.animalType, Validators.required],
-      birthdate: [pet.birthdate, Validators.required]
+    this.petDataForm.patchValue({
+      name: pet.name,
+      breed: pet.breed,
+      color: pet.color,
+      petType: pet.petType, // Preenche o tipo de animal corretamente
+      birthDate: pet.birthDate,
     });
   }
 
@@ -131,24 +95,22 @@ export class PerfilPetsComponent implements OnInit {
 
   updatePet(): void {
     if (this.petDataForm.valid) {
-      this.petService.updatePet(this.pets[this.selectedPetIndex].id, this.petDataForm.getRawValue()).subscribe({
+      this.petService.updatePet(this.pets[this.selectedPetIndex].idPet, this.petDataForm.getRawValue()).subscribe({
         next: (response: any) => {
-
           console.log('Pet atualizado com sucesso!', response);
           const dialogRef = this.dialog.open(ConfirmDialog, {
             width: '250px',
             data: { message: 'Pet atualizado com sucesso!' }
           });
           dialogRef.afterClosed().subscribe(() => {
-            console.log('sucess')
+            console.log('sucess');
           });
         },
         error: (error: any) => {
           console.error('Erro ao atualizar pet', error);
-
           let requestErrorMessage = error.message;
           if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
           }
           const dialogRef = this.dialog.open(DialogErrorComponent, {
             width: '250px',
@@ -159,7 +121,6 @@ export class PerfilPetsComponent implements OnInit {
               // this.router.navigate(['/login']);
             }
           });
-
         }
       });
     } else {
@@ -181,21 +142,21 @@ export class PerfilPetsComponent implements OnInit {
   }
 
   deletePet(): void {
-    this.petService.deletePet(this.pets[this.selectedPetIndex].id).subscribe({
+    this.petService.deletePet(this.pets[this.selectedPetIndex].idPet).subscribe({
       next: () => {
         console.log('Pet excluído com sucesso.');
         this.pets.splice(this.selectedPetIndex, 1);
         if (this.pets.length > 0) {
-          this.onSelectPet(0); // Selecione o primeiro pet após excluir um
+          this.onSelectPet(0);
         } else {
-          this.petDataForm.reset(); // Se não houver mais pets, limpe o formulário
+          this.petDataForm.reset();
         }
       },
       error: (error: any) => {
         console.error('Erro ao excluir o pet', error);
         let requestErrorMessage = error.message;
         if (isHttpFailureResponse(error)) {
-          requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+          requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.";
         }
         const dialogRef = this.dialog.open(DialogErrorComponent, {
           width: '250px',
@@ -218,7 +179,7 @@ export class PerfilPetsComponent implements OnInit {
     }
   }
 
-  redirect(route : string){
+  redirect(route: string): void {
     this.router.navigate([route]);
   }
 }

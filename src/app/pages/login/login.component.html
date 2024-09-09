@@ -5,7 +5,7 @@
     <div class="signup">
       <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
         <label for="chk" (click)="esqueciSenha(false)" aria-hidden="true">Cadastro</label>
-        <input style="margin-top: -10px;" type="text" formControlName="name" placeholder="Nome" required>
+        <input style="margin-top: -10px;" type="text" formControlName="nmUser" placeholder="Nome" required>
         <input type="email" formControlName="email" placeholder="Email" required>
         <div *ngIf="cadastroForm.get('email')?.touched || cadastroForm.get('email')?.dirty">
           <div *ngIf="cadastroForm.get('email')?.errors?.['email']">

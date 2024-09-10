@@ -23,7 +23,6 @@ export class PainelComponent implements OnInit {
   ngOnInit(): void {
     const permissao = localStorage.getItem('permission');
     this.permissaoAdmin = permissao === 'ADMIN';
-    this.permissaoAdmin = true
     if (this.permissaoAdmin) {
       this.isAdmin = true;
       this.loadAdminAppointments();
@@ -111,7 +110,6 @@ export class PainelComponent implements OnInit {
   setActive(index: number) {
     const permissao = localStorage.getItem('permission');
     this.permissaoAdmin = permissao === 'ADMIN';
-    this.permissaoAdmin = true
     if (this.permissaoAdmin) {
       this.isAdmin = true;
       this.loadAdminAppointments();

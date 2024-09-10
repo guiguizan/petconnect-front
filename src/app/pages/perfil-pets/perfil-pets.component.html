@@ -9,7 +9,7 @@
       <button mat-button class="pets arrow-left" (click)="redirect('painel')">Voltar ao painel</button>
     </header>
   
-    <div class="profile-container" *ngIf="petDataForm">
+    <div class="profile-container" *ngIf="petDataForm && pets.length !== 0">
       <form [formGroup]="petDataForm" (ngSubmit)="updatePet()">
         <div class="form-group">
           <label for="name">Nome:</label>

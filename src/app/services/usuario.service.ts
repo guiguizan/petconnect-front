@@ -10,7 +10,9 @@ export class UsuarioService {
 
   private baseUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/user';
   private authUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/auth';
-  
+  private passwordUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/password';
+  private roleUrl = 'https://pet-connect-postgree-27f454547a44.herokuapp.com/api/v1/role-user';
+
   constructor(private http: HttpClient) { }
 
   registerUser(userData: any): Observable<any> {
@@ -62,15 +64,22 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post(`${this.authUrl}/reset-password`, emailData, { headers });
+    return this.http.post(`${this.passwordUrl}/reset-password?email=` + emailData.email, { headers });
   }
 
   confirmResetPassword(token: string, newPassword: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    const body = { newPassword };
-    const url = `${this.authUrl}/reset-password/confirm?token=${token}`;
+    const body = { newPassword, token };
+    const url = `${this.passwordUrl}/reset-password/confirm?token=` +  token + '&newPassword=' + newPassword;
     return this.http.post(url, body, { headers });
+  }
+
+  getAllRoles(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.get(`${this.roleUrl}`, { headers });
   }
 }

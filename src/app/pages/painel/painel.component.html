@@ -41,7 +41,7 @@
             <span class="nav-text">Veterinario</span>
           </a>
         </li>
-        <li class="nav-item" [ngClass]="{'active': activeItem === 2}" (click)="setActive(2)">
+        <li *ngIf="!isAdmin" class="nav-item" [ngClass]="{'active': activeItem === 2}" (click)="setActive(2)">
           <b></b>
           <b></b>
           <a >
@@ -55,6 +55,14 @@
           <a >
             <i class="fa fa-person-running nav-icon">Pet</i>
             <span class="nav-text">Meu pet</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 3}" (click)="setActive(4)">
+          <b></b>
+          <b></b>
+          <a >
+            <i class="fa fa-person-running nav-icon">Usuarios</i>
+            <span class="nav-text">Usuarios</span>
           </a>
         </li>
       </ul>
@@ -108,6 +116,16 @@
           </div>
             <app-dog></app-dog>
           </div>
+        </div>
+
+
+        <div *ngIf="activeItem === 4" >
+          <div style="text-align: center; margin-top: 50px; margin-right: 5%;">
+            <h1 >Usuarios</h1>
+            <h2>Administre seus usuarios</h2>
+         <app-user-list></app-user-list>
+          </div>
+       
         </div>
 
         <div>

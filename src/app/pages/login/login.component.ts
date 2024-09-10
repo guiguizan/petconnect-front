@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.error('Erro ao cadastrar usuário', error);
           this.errorMessage = 'Erro ao cadastrar usuário. Por favor, tente novamente.';
-          this.modalDeErro(error.error.fieldsMessage);
+          this.modalDeErro(error.error.details);
         }
       });
     }

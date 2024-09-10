@@ -26,6 +26,7 @@ import { CadastroPetsService } from './services/cadastro-pets.service';
 import { PetService } from './services/pets.service';
 import { DialogErrorComponent } from './components/dialog-error/dialog-error.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra); 
@@ -44,6 +45,7 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
     DogComponent,
     DialogErrorComponent,
     ResetPasswordComponent,
+    UserListComponent,
     
   ],
   imports: [

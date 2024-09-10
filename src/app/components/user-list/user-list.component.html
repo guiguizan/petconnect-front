@@ -1,0 +1,35 @@
+<div class="role-list">
+  <select (change)="onRoleChange($event)">
+    <option *ngFor="let role of roles" [value]="role.name">{{ role.description }}</option>
+  </select>
+</div>
+
+<div class="user-list">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Função</th> <!-- Nova coluna Função -->
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.idUser }}</td>
+        <td>{{ user.nmUser }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <!-- Select para exibir as roles já selecionadas -->
+          <select [(ngModel)]="user.roles[0].idRole" (change)="onRoleSelectChange(user.idUser, user.roles[0].idRole)">
+            <option *ngFor="let role of roles" [value]="role.idRole">{{ role.description }}</option>
+          </select>
+        </td>
+        <td>
+          <button (click)="editUser(user.idUser)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

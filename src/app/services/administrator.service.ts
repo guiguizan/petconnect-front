@@ -19,4 +19,14 @@ export class AdministratorService {
 
     return this.http.get(url, { params });
   }
+  
+  updateUserRole(email: string, idRole: number): Observable<any> {
+    const url = `${this.apiUrl}`;
+    const body = {
+      email: email,
+      idRole: idRole
+    };
+    return this.http.post(url, body);
+  }
+  
 }

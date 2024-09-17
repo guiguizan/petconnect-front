@@ -10,33 +10,17 @@ export class SchedulerComponent implements OnInit {
   @Input() appointments: any[] = [];
   @Output() editAppointmentEvent = new EventEmitter<number>();
   currentWeekStart: Date = this.getStartOfWeek(new Date());
+  permissaoAdmin: boolean = false;
+
 
   constructor(private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.currentWeekStart = this.getStartOfWeek(new Date());
-    // this.appointments = [
-    //   {
-    //     petId: 10,
-    //     userId: 10,
-    //     serviceType: "BATH_AND_GROOMING",
-    //     petType: "DOG",
-    //     appointmentDate: new Date(2024, 4, 29, 8, 0),
-    //     appointmentTime: "10:00",
-    //     status: "SCHEDULED",
-    //     appointmentId: 10
-    //   },
-    //   {
-    //     petId: 10,
-    //     userId: 10,
-    //     serviceType: "BATH_AND_GROOMING",
-    //     petType: "DOG",
-    //     appointmentDate: new Date(2024, 4, 28, 8, 0),
-    //     appointmentTime: "10:00",
-    //     status: "SCHEDULED",
-    //     appointmentId: 11
-    //   }
-    // ];
+
+    const permissao = localStorage.getItem('permission');
+    this.permissaoAdmin = permissao === 'ADMIN';
+
   }
 
   ngOnChanges() {
@@ -59,11 +43,12 @@ export class SchedulerComponent implements OnInit {
   }
 
   getAppointmentsForDay(day: Date): any[] {
+    const dayString = this.datePipe.transform(day, 'yyyy-MM-dd');
     return this.appointments.filter(appointment => {
-      const appointmentDate = new Date(appointment.appointmentDate);
-      return this.datePipe.transform(appointmentDate, 'yyyy-MM-dd') === this.datePipe.transform(day, 'yyyy-MM-dd');
+      return appointment.appointmentDate === dayString;
     });
   }
+  
 
   previousWeek() {
     this.currentWeekStart = new Date(this.currentWeekStart.setDate(this.currentWeekStart.getDate() - 7));

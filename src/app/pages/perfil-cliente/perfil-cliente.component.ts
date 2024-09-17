@@ -42,23 +42,19 @@ export class PerfilClienteComponent implements OnInit {
       name: [{ value: '', disabled: true }, Validators.required],
       cpf: [{ value: '', disabled: true }, Validators.required],
       phoneNumber: [{ value: '', disabled: true }, Validators.required],
-      password: [{ value: '', disabled: false }, Validators.required],
-      confirmPassword: [{ value: '', disabled: false }, Validators.required]
     });
   }
 
   loadUserData(userId: any): void {
     this.usuarioService.getUser().subscribe({
       next: (userData) => {
-        console.log(userData)
+        console.log(userData.contacts[0].contactValue)
         this.userName = userData.username;
         this.userDataForm = this.formBuilder.group({
           email: [{ value: userData.email, disabled: true }, Validators.required],
-          name: [{ value: userData.name, disabled: true }, Validators.required],
+          name: [{ value: userData.nmUser, disabled: true }, Validators.required],
           cpf: [{ value: userData.cpf, disabled: true }, Validators.required],
-          phoneNumber: [{ value: userData.phoneNumber, disabled: true }, Validators.required],
-          password: [{ value: '', disabled: false }, Validators.required],
-          confirmPassword: [{ value: '', disabled: false }, Validators.required]
+          phoneNumber: [{ value: userData.contacts[0].contactValue, disabled: true }, Validators.required],
         });
       },
       error: (error) => {
@@ -82,12 +78,22 @@ export class PerfilClienteComponent implements OnInit {
 
   updateUser(): void {
     if (this.userDataForm.valid) {
-      this.usuarioService.updateUser( this.userDataForm.getRawValue()).subscribe({
+      const updateData = {
+        name: this.userDataForm.get('name')?.value,
+        contacts: [
+          {
+            type: 'phone',
+            contactValue: this.userDataForm.get('phoneNumber')?.value,
+          },
+        ],
+      };
+  
+      this.usuarioService.updateUser(updateData).subscribe({
         next: (response) => {
           console.log('Usuário atualizado com sucesso', response);
           const dialogRef = this.dialog.open(ConfirmDialog, {
             width: '250px',
-            data: { message: 'Usuário atualizado com sucesso!' }
+            data: { message: 'Usuário atualizado com sucesso!' },
           });
           dialogRef.afterClosed().subscribe(() => {
             this.clearLocalStorage();
@@ -96,21 +102,22 @@ export class PerfilClienteComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao atualizar usuário', error);
-
+  
           let requestErrorMessage = error.message;
           if (isHttpFailureResponse(error)) {
-            requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+            requestErrorMessage =
+              'Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.';
           }
           const dialogRef = this.dialog.open(DialogErrorComponent, {
             width: '250px',
-            data: { message: requestErrorMessage }
+            data: { message: requestErrorMessage },
           });
-          dialogRef.afterClosed().subscribe(result => {
+          dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-              // this.router.navigate(['/login']);
+              // Ações após o diálogo ser fechado, se necessário
             }
           });
-        }
+        },
       });
     } else {
       console.log('Formulário inválido. Verifique os campos.');

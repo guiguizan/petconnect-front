@@ -61,7 +61,18 @@ export class LoginComponent implements OnInit {
   }
   
 
-  ngOnInit(): void { }
+  ngOnInit(){
+ 
+  }
+
+  resetToken(){
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      localStorage.removeItem('token');
+      console.log('Token removido com sucesso.');
+    }
+  }
 
   cadastrar() {
     if (this.cadastroForm.valid) {
@@ -117,7 +128,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', response.token);
   
             const roles = response.roles;
-            if (roles && roles.some((role: any) => role.name === 'ROLE_ADMIN')) {
+            if (roles && roles.some((role: any) => role.name === 'ROLE_USER_ADMIN')) {
               localStorage.setItem('permission', 'ADMIN');
             } else {
               localStorage.setItem('permission', 'USER');

@@ -38,6 +38,7 @@ export class UsuarioService {
     return this.http.put(`${this.baseUrl}`, userData, { headers });
   }
 
+  
   getUser(): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token')}`

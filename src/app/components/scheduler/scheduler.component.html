@@ -14,7 +14,7 @@
           <div class="appointment-time">
             Horário: {{ appointment.appointmentTime }}
           </div>
-          <button style="max-height: 10px; margin-top: 10px;" class="nav-button" (click)="editAppointment(appointment.id)">Editar</button>
+          <button *ngIf="!permissaoAdmin" style="max-height: 10px; margin-top: 10px;" class="nav-button" (click)="editAppointment(appointment.id)">Editar</button>
         </div>
       </div>
     </div>

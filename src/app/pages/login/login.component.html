@@ -38,7 +38,7 @@
       <div class="login">
         <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div *ngIf="!isForgetPassword">
-          <label  style="padding-top: 40px !important;" for="chk" aria-hidden="true"> <p >Login</p></label>
+          <label (click)="resetToken()" style="padding-top: 40px !important;" for="chk" aria-hidden="true"> <p >Login</p></label>
           <input type="email" formControlName="email" placeholder="Email" required="true">
           <input type="password" formControlName="password" placeholder="Senha" required="">
           <div *ngIf="errorMessage">

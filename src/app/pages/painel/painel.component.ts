@@ -33,10 +33,10 @@ export class PainelComponent implements OnInit {
   }
 
   loadAdminAppointments() {
-    this.appointmentService.getAppointments().subscribe(
+    this.appointmentService.getAppointmentsAdmin().subscribe(
       (data: any) => {
         console.log(data);
-        this.appointments = data;
+        this.appointments = data.content;
         this.filterAppointments();
       },
       (error: any) => {

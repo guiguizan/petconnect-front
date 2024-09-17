@@ -134,36 +134,54 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
 
   onSubmit() {
     if (this.appointmentForm.valid) {
-      const newAppointment = {
-        ...this.appointmentForm.value
-      };
-      console.log(newAppointment)
-
+      const formValues = this.appointmentForm.value;
+      let newAppointment = {}
+      if(this.appointmentId){
+        newAppointment = {
+          appointmentId: this.appointmentId,
+          petId: formValues.petId,
+          serviceType: formValues.serviceType,
+          appointmentDate: formValues.appointmentDate,
+          appointmentTime: formValues.appointmentTime,
+        };
+      }else{
+        newAppointment = {
+          petId: formValues.petId,
+          serviceType: formValues.serviceType,
+          appointmentDate: formValues.appointmentDate,
+          appointmentTime: formValues.appointmentTime,
+        };
+      }
+      
+  
+      console.log(newAppointment);
+  
       if (this.isEditMode && this.appointmentId) {
-        this.appointmentService.updateAppointment(this.appointmentId, newAppointment).subscribe(
+        this.appointmentService.updateAppointment(newAppointment).subscribe(
           (response: any) => {
-            console.log('Agendamento realizado com sucesso!', response);
+            console.log('Agendamento atualizado com sucesso!', response);
             const dialogRef = this.dialog.open(ConfirmDialog, {
               width: '250px',
-              data: { message: 'Agendamento realizado com sucesso!' }
+              data: { message: 'Agendamento atualizado com sucesso!' },
             });
             dialogRef.afterClosed().subscribe(() => {
-              console.log('sucess')
+              console.log('sucess');
             });
           },
           (error: any) => {
             console.error('Error Updating Appointment:', error);
             let requestErrorMessage = error.message;
             if (isHttpFailureResponse(error)) {
-              requestErrorMessage = "Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes."
+              requestErrorMessage =
+                'Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.';
             }
             const dialogRef = this.dialog.open(DialogErrorComponent, {
               width: '250px',
-              data: { message: requestErrorMessage }
+              data: { message: requestErrorMessage },
             });
-            dialogRef.afterClosed().subscribe(result => {
+            dialogRef.afterClosed().subscribe((result) => {
               if (result) {
-                // this.router.navigate(['/login']);
+                // Handle after dialog close if necessary
               }
             });
           }
@@ -171,10 +189,31 @@ export class NewAppointmentComponent implements OnInit, OnChanges {
       } else {
         this.appointmentService.scheduleAppointment(newAppointment).subscribe(
           (response: any) => {
-            console.log('New Appointment Created:', response);
+            console.log('Novo agendamento criado:', response);
+            const dialogRef = this.dialog.open(ConfirmDialog, {
+              width: '250px',
+              data: { message: 'Agendamento realizado com sucesso!' },
+            });
+            dialogRef.afterClosed().subscribe(() => {
+              console.log('sucess');
+            });
           },
           (error: any) => {
             console.error('Error Creating Appointment:', error);
+            let requestErrorMessage = error.message;
+            if (isHttpFailureResponse(error)) {
+              requestErrorMessage =
+                'Serviço fora do ar. Nossa equipe está trabalhando para voltar o quanto antes.';
+            }
+            const dialogRef = this.dialog.open(DialogErrorComponent, {
+              width: '250px',
+              data: { message: requestErrorMessage },
+            });
+            dialogRef.afterClosed().subscribe((result) => {
+              if (result) {
+                // Handle after dialog close if necessary
+              }
+            });
           }
         );
       }

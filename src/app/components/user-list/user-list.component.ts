@@ -1,4 +1,5 @@
 // src/app/components/user-list/user-list.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { AdministratorService } from 'src/app/services/administrator.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -10,15 +11,15 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class UserListComponent implements OnInit {
   users: any[] = [];
-  roles: any[] = []
-  selectedRole: string = '';
+  roles: any[] = [];
+  selectedRole: string = 'ALL';
   pageable = { page: 0, size: 10 }; 
 
   constructor(private adminService: AdministratorService, private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.loadRoles();
-    this.loadUsers('ALL')
+    this.loadUsers(this.selectedRole);
   }
 
   loadUsers(ROLE: string): void {
@@ -30,10 +31,6 @@ export class UserListComponent implements OnInit {
         console.error('Erro ao carregar usuários:', error);
       }
     );
-  }
-
-  editUser(userId: number): void {
-    console.log('Editar usuário com ID:', userId);
   }
 
   loadRoles(): void {
@@ -55,6 +52,23 @@ export class UserListComponent implements OnInit {
 
   onRoleSelectChange(userId: number, selectedRoleId: number): void {
     console.log(`Usuário ID: ${userId}, Role selecionada: ${selectedRoleId}`);
-    // Aqui você pode implementar a lógica de atualização da role no servidor, se necessário.
+    const user = this.users.find(u => u.idUser === userId);
+    if (user) {
+      const email = user.email;
+      this.adminService.updateUserRole(email, selectedRoleId).subscribe(
+        (response) => {
+          console.log('Role updated successfully', response);
+          // Optionally, refresh the user list
+          this.loadUsers(this.selectedRole);
+        },
+        (error) => {
+          console.error('Erro ao atualizar o papel do usuário:', error);
+        }
+      );
+    }
+  }
+
+  editUser(userId: number): void {
+    console.log('Editar usuário com ID:', userId);
   }
 }

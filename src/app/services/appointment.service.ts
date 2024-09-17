@@ -16,6 +16,10 @@ export class AppointmentService {
     return this.http.get<any[]>(`${this.apiUrlUser}`);
   }
 
+  getAppointmentsAdmin(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+  }
+
   getAppointmentById(appointmentId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/{id}?idAppointament=${appointmentId}`);
   }
@@ -28,8 +32,8 @@ export class AppointmentService {
     return this.http.post<any>(`${this.apiUrl}`, appointmentRequest);
   }
 
-  updateAppointment(appointmentId: number, appointmentRequest: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${appointmentId}`, appointmentRequest);
+  updateAppointment(appointmentRequest: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}`, appointmentRequest);
   }
 
   cancelAppointment(appointmentId: number): Observable<void> {

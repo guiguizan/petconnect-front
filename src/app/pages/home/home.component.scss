@@ -1,0 +1,579 @@
+//  GENERAL SETTINGS  //
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body{
+  font-family: "Open Sans", sans-serif;
+}
+
+section {
+  padding: 60px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: rgb(198, 166, 115);
+  bottom: 0;
+  left: calc(50% - 25px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+.section-bg {
+  padding: 120px 0;
+  color: #fff;
+}
+
+.section-bg:before {
+  content: "";
+  background: #1b1b1b;
+  position: absolute;
+  bottom: 60px;
+  top: 60px;
+  left: 0;
+  right: 0;
+  transform: skewY(-3deg);
+}
+
+.btn-primary{
+  background-color: #201a51;
+  border: 1px solid #132e57;
+  border-radius: 100px;
+}
+.btn-primary:hover{
+background-color: #2d4e7c;
+border: 1px solid #2b4d7c;
+}
+
+
+.btn-secondary{
+border-radius: 100px;
+}
+
+
+
+
+
+// *********************************** //
+// ------  SECTION HOME INIT  ---------//
+//  //  //  //  //  //  //  //  //  //  //
+.home{
+  width: auto;
+  height: 100vh;
+  display: flex;
+  background-image: url(/assets/pets/dog.jpg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#home > div > img{
+  width: 30%;
+  min-width: 300px;
+  height: auto;
+  transition: transform 0.3s ease; // Adicionando transição
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.03); // Aumenta o tamanho do botão em 10%
+  }
+}
+
+.home::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.801);
+}
+
+.home .container-home{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.home .container-home > h1{
+  color: aliceblue;
+  font-size: 15pt;
+}
+
+// ------  FINAL SECTION HOME  ---------//
+// *********************************** //
+// ------  SECTION ABOUT INIT  ---------//
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.about{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+
+  .section-bg {
+    background-color: rgb(198, 166, 115);
+    padding: 120px 0;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .section-bg:before {
+    content: "";
+    // background: #0d2039;
+    background: #201a51;
+    position: absolute;
+    bottom: 60px;
+    top: 60px;
+    left: 0;
+    right: 0;
+    transform: skewY(-3deg);
+  }
+
+.about .container {
+    position: relative;
+    z-index: 10;
+  }
+
+  .about .content {
+    padding: 30px 30px 30px 0;
+  }
+
+  .about .content h3 {
+    font-weight: 700;
+    font-size: 34px;
+    margin-bottom: 30px;
+  }
+
+  .about .content p {
+    margin-bottom: 30px;
+  }
+
+  .about .content .about-btn {
+    padding: 8px 30px 9px 30px;
+    color: #fff;
+    border-radius: 50px;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid rgb(198, 166, 115);
+    text-decoration: none;
+  }
+
+  .about .content .about-btn i {
+    font-size: 16px;
+    padding-left: 5px;
+  }
+
+  .about .content .about-btn:hover {
+    background: rgb(198, 166, 115);
+  }
+
+  .about .icon-boxes .icon-box {
+    margin-top: 30px;
+  }
+
+  .about .icon-boxes .icon-box i {
+    font-size: 40px;
+    color: #201a51;
+
+    margin-bottom: 10px;
+  }
+
+  .about .icon-boxes .icon-box h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+
+  .about .icon-boxes .icon-box p {
+    font-size: 15px;
+    color: #848484;
+  }
+
+
+
+  @media (max-width: 1200px) {
+    .about .content {
+      padding-right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about {
+      text-align: center;
+    }
+  }
+
+  /*--------------------------------------------------------------
+# Counts
+--------------------------------------------------------------*/
+.counts {
+  background-color: #ffffff;
+  padding-top: 80px;
+}
+
+.counts .count-box {
+  padding: 30px 30px 25px 30px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  box-shadow: 0px 2px 35px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+}
+
+.counts .count-box i {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  top: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  background: #fff;
+  color: #2059a8;
+  border-radius: 50px;
+  border: 2px solid #fff;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counts .count-box span {
+  font-size: 36px;
+  display: block;
+  font-weight: 700;
+  color: #111111;
+}
+
+.counts .count-box p {
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+}
+
+
+/*--------------------------------------------------------------
+# Tabs
+--------------------------------------------------------------*/
+.tabs{
+  background-color: white;
+}
+
+.tabs .nav-tabs {
+  border: 0;
+}
+
+.tabs .nav-link {
+  border: 1px solid #b9b9b9;
+  padding: 15px;
+  margin-top: 10px;
+  transition: 0.3s;
+  color: #111111;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tabs .nav-link i {
+  padding-right: 15px;
+  font-size: 48px;
+}
+
+.tabs .nav-link h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tabs .nav-link:hover {
+  color: #201a51;
+}
+
+.tabs .nav-link.active {
+  background: #201a51;
+  color: #fff;
+  border-color: #201a51;
+}
+
+@media (max-width: 768px) {
+  .tabs .nav-link i {
+    padding: 0;
+    line-height: 1;
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 575px) {
+  .tabs .nav-link {
+    padding: 15px;
+  }
+
+  .tabs .nav-link i {
+    font-size: 24px;
+  }
+}
+
+.tabs .tab-content {
+  margin-top: 30px;
+}
+
+.tabs .tab-pane h3 {
+  font-weight: 600;
+  font-size: 26px;
+}
+
+.tabs .tab-pane ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tabs .tab-pane ul li {
+  padding-bottom: 10px;
+}
+
+.tabs .tab-pane ul i {
+  font-size: 20px;
+  padding-right: 4px;
+  color: #201a51;
+}
+
+.tabs .tab-pane p:last-child {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Hero
+--------------------------------------------------------------*/
+.hero .text-body-emphasis{
+  color: #122a4d!important;
+}
+
+.hero .row{
+  flex-direction: column-reverse;
+}
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+
+.section-bg-ctt {
+  background-color: rgb(198, 166, 115);
+  padding: 120px 0;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+.section-bg-ctt:before {
+  content: "";
+  background: #201a51;
+  position: absolute;
+  bottom: 60px;
+  top: 60px;
+  left: 0;
+  right: 0;
+  transform: skewY(3deg);
+}
+
+.contact .container-contact{
+  position: relative;
+  width: 100%;
+  padding: 5%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  z-index: 10;
+}
+
+.contact h2{
+  font-weight: bolder;
+}
+
+
+.contact .info-box {
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.066);
+  padding: 30px 0 32px 0;
+  border-radius: 4px;
+  background-color: #0f2340b0;
+}
+
+.contact .info-box i, .email-form i{
+  font-size: 32px;
+  color: rgb(198, 166, 115);
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.contact .info-box h3 {
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.contact .info-box p {
+  padding: 0;
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.contact .email-form {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.066);
+  padding: 30px;
+  border-radius: 4px;
+  background-color: #0f2340b0;
+}
+
+.contact .email-form .error-message {
+  display: none;
+  color: #fff;
+  background: rgb(198, 166, 115);
+  text-align: left;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact .email-form .error-message br+br {
+  margin-top: 25px;
+}
+
+.contact .email-form .sent-message {
+  display: none;
+  color: #fff;
+  background: #18d26e;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact .email-form .loading {
+  display: none;
+  background: #fff;
+  text-align: center;
+  padding: 15px;
+}
+
+.contact .email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid #18d26e;
+  border-top-color: #eee;
+  animation: animate-loading 1s linear infinite;
+}
+
+.contact .email-form .form-group {
+  margin-bottom: 25px;
+}
+
+.contact .email-form input,
+.contact .email-form textarea {
+  box-shadow: none;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.contact .email-form input:focus,
+.contact .email-form textarea:focus {
+  border-color: #111111;
+}
+
+.contact .email-form input {
+  padding: 10px 15px;
+}
+
+.contact .email-form textarea {
+  padding: 12px 15px;
+}
+
+.contact .email-form .sent-message {
+  display: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background: #18d26e;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+  border-radius: 4px;
+  transition: opacity 0.6s ease;
+}
+
+.contact .email-form .sent-message[ng-reflect-ng-if="true"] {
+  display: flex;
+}
+
+
+.contact .email-form button[type=submit] {
+  background: rgb(198, 166, 115);
+  border: 0;
+  padding: 10px 32px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.contact .email-form button[type=submit]:hover {
+  background: rgb(198, 166, 115);
+}
+
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

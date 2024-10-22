@@ -28,6 +28,8 @@ import { DialogErrorComponent } from './components/dialog-error/dialog-error.com
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { PhoneMaskDirective } from './phone-mask.directive';
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './sharedPages/navbar/navbar.component';
 
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra); 
@@ -48,7 +50,8 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
     ResetPasswordComponent,
     UserListComponent,
     PhoneMaskDirective,
-    
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

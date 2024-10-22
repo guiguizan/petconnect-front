@@ -7,6 +7,7 @@ import { PerfilClienteComponent } from './pages/perfil-cliente/perfil-cliente.co
 import { PerfilPetsComponent } from './pages/perfil-pets/perfil-pets.component';
 import { PainelComponent } from './pages/painel/painel.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'pets', component: PerfilPetsComponent},
   {path: 'painel', component: PainelComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InsertProductRequestDto, ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-produto-form',
@@ -18,7 +20,8 @@ export class ProdutoFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialog: MatDialog
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -89,6 +92,13 @@ export class ProdutoFormComponent implements OnInit {
             console.log('Produto atualizado com sucesso:', response);
             this.productForm.reset();
             this.imageFile = null;
+            const dialogRef = this.dialog.open(ConfirmDialog, {
+              width: '250px',
+              data: { message: 'Produto editado com sucesso.' }
+            });
+            dialogRef.afterClosed().subscribe(() => {
+           
+            });
           },
           error: (error) => {
             console.error('Erro ao atualizar produto:', error);

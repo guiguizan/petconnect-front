@@ -17,6 +17,7 @@ export class PainelComponent implements OnInit {
   permissaoAdmin: any;
   filteredAppointments: any;
   isAdmin: boolean = false;
+  isDarkTheme = false;
 
   constructor(private appointmentService: AppointmentService, private router: Router, private dialog: MatDialog) {}
 
@@ -57,6 +58,12 @@ export class PainelComponent implements OnInit {
         });
       }
     );
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    const theme = this.isDarkTheme ? 'dark-theme' : '';
+    document.body.className = theme;
   }
 
   loadAppointments() {

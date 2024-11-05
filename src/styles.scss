@@ -1,3 +1,47 @@
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+    body {
+        transition: background-color 0.3s, color 0.3s;
+    }
+  
+    .main-menu,
+    .left-content,
+    .botao {
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+
+    .botao {
+        background-color: var(--primary-color);
+    }
+    
+    .botao:hover {
+        background-color: var(--primary-hover-color); // Adicione essa variável ao seu tema
+    }
+
+    :root {
+        --primary-color: #6200ee;
+        --primary-hover-color: #5e00cc;
+        --background-color: #ffffff;
+        --text-color: #000000;
+        --menu-background-color: rgb(73, 57, 113);
+        --menu-text-color: #ffffff;
+        --button-background-color: #7937f3;
+        --button-hover-background-color: #5e00cc;
+        --button-text-color: #ffffff;
+    }
+    
+    .dark-theme {
+        --primary-color: #bb86fc;
+        --primary-hover-color: #9a6bd6;
+        --background-color: #121212;
+        --text-color: #ffffff;
+        --menu-background-color: rgb(40, 40, 40);
+        --menu-text-color: #ffffff;
+        --button-background-color: #bb86fc;
+        --button-hover-background-color: #9a6bd6;
+        --button-text-color: #000000;
+    }
+    

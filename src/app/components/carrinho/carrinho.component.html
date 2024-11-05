@@ -1,0 +1,44 @@
+<div class="cart-container" [class.open]="isCartOpen"
+     (touchstart)="onTouchStart($event)"
+     (touchmove)="onTouchMove($event)"
+     (touchend)="onTouchEnd($event)"
+     [class.open]="isCartOpen">
+
+  <div style="padding-top: 125px !important;" class="cart-header">
+    <h2 alt="My Order" Title="My Order">Meu carrinho</h2>
+    <button (click)="toggleCart()" class="close-cart-button" alt="close" title="Close">×</button>
+  </div>
+  <div class="cart-content">
+    <div *ngFor="let produto of produtos" class="cart-item">
+      <img [src]="produto.product.images[0]" alt="Produto">
+      <div class="item-details">
+        <h3>{{ produto.product.description }}</h3>
+        <p>
+          <button (click)="updateQuantity(produto, produto.quantity - 1)">-</button>
+          Un: {{ produto.quantity }}
+          <button (click)="updateQuantity(produto, produto.quantity + 1)">+</button>
+        </p>
+        <span class="price"> R$ {{ getItemTotal(produto) | number:'1.2-2' }}</span>
+
+        <!-- Botão de Lixeira-->
+        <button type="button" class="btn btn-secondary" (click)="removeProduto(produto)" style="margin-left: 50%;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"></path>
+          </svg>
+        </button>
+        <!-- FINAL Botão de Lixeira-->
+      </div>
+    </div>
+    <p class="empty-cart" *ngIf="cartIsEmpty" alt="Your cart is empty" title="Your cart is empty">
+      Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="total">
+      <h3>Total: R$ {{ getTotal() | number:'1.2-2' }}</h3>
+    </div>
+      <button class="checkout-button"  Alt="Finalize Order" title="Finalize Order">Produtos disponiveis em loja</button>
+    <!-- <button class="checkout-button" (click)="finalizar();" Alt="Finalize Order" title="Finalize Order">Finalizar compra</button> -->
+  </div>
+</div>
+
+<button *ngIf="!isCartOpen" class="open-cart-button" (click)="toggleCart($event)" alt="Open My Order Cart" Title="Order Cart"><i class="bi bi-cart3"></i></button>

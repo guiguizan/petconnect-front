@@ -1,0 +1,115 @@
+<app-navbar></app-navbar>
+<main role="main" class="main">
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="step" [class.active]="step === 1" [class.completed]="step > 1">
+        <div class="circle">1</div>
+        <p>Animal</p>
+      </div>
+      <div class="step" [class.active]="step === 2" [class.completed]="step > 2">
+        <div class="circle">2</div>
+        <p>Produtos </p>
+      </div>
+    
+    </div>
+  </div>
+  <!-- Step 1: Select Box Type -->
+ 
+  <section class="jumbotron text-center" *ngIf="step >= 1">
+    <div class="container">
+      <h1 class="jumbotron-heading">Selecione seu pet</h1>
+      <p class="lead text-muted">Com base no tipo de pet selecionaremos os melhores produtos que temos em nosso estoque. Disponíveis para compra em nosso ponto físico. Corra conhecer!</p>
+      <div>
+        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'Melamine'" (click)="selectBoxType('Melamine')">Gato</button>
+        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'Plywood'" (click)="selectBoxType('Plywood')">cachorro</button>
+      </div>
+    </div>
+    <!-- Step 2: Select Line of Materials -->
+    <!-- <section class="container-materials" *ngIf="step >= 2">
+      TESTE VERMELHO
+      <br>
+      <br>
+      <div class="container">
+        <h1 class="jumbotron-heading">Select Line of Materials
+          <a href="/materials" target="_blank">
+            <i class="bi bi-info-circle" title="View available materials"></i>
+          </a>
+        </h1>
+        <p class="lead text-muted">The total value will be updated based on your choice of material line.</p>
+      
+      </div>
+    </section> -->
+  </section>
+  <div class="wave-divider" *ngIf="step >= 1"></div>
+
+
+
+  <div *ngIf="isCadastroProduto" style="margin-top: 80px;">
+    <app-produto-form   [produtoEdicao]="produtoEdicao" [isEditMode]="true"></app-produto-form>
+  </div>
+
+
+  <br><br>
+  <!-- Step 3: Select Products -->
+  <div class="album">
+    <div class="container">
+      <div class="filter-container">
+        <!-- Filtro de categoria e pesquisa -->
+        <div class="select-wrapper">
+          <!-- <select class="form-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange($event)">
+            <option value="all">Todas as Categorias</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category | titlecase }}</option>
+          </select> -->
+        </div>
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 6.5 0 1 1-11 0 5.5 6.5 0 0 1 11 0"></path>
+              </svg>
+            </span>
+            <input type="text" class="form-control" placeholder="Pesquise o produto..." (input)="onSearchQueryChange($event)">
+         
+
+          </div>
+        </div>
+      </div>
+  
+      <div class="container text-center" *ngIf="hasFilteredProducts(); else noProducts">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xxl-3 g-3">
+          <div *ngFor="let product of filteredProducts" class="col-md-4">
+            <app-card-produto
+              (abriuCarrinho)="abreCarrinho($event)"
+              [product]="product"
+              (produtoSelecionado)="onProdutoSelecionado($event)"
+              (editProdutoSelecionado)="onProdutoSelecionadoEdit($event)">
+            </app-card-produto>
+            
+          </div>
+        </div>
+      </div>
+  
+      <ng-template #noProducts>
+        <div class="alert alert-warning" role="alert">
+          Nenhum produto encontrado para "{{ pesquisa }}" na categoria "{{ selectedCategory }}".
+        </div>
+      </ng-template>
+  
+      <!-- Paginação -->
+      <div class="pagination-container" *ngIf="totalPages > 1"  style="margin-top: 40px;">
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Anterior</button>
+        <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+        <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Próxima</button>
+      </div>
+    </div>
+  </div>
+  
+  <button id="back-to-top" title="Back to Top" (click)="backToTop()"><i class="bi bi-arrow-up"></i></button>
+</main>
+
+
+<div>
+  <app-carrinho [atualizarCarrinho]="atualizarCarrinho" [produtoSelecionado]="produtoSelecionado" [abrirCarrinho]="abrirCarrinho"></app-carrinho>
+</div>
+<!-- Alert container -->
+<div id="alert-container" class="alert-container"></div>

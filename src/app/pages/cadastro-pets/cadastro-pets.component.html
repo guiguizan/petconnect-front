@@ -4,8 +4,8 @@
 
       <div class="signup">
         <form [formGroup]="cadastroPetsForm" (ngSubmit)="cadastrar()">
-          <label for="chk" aria-hidden="true">Cadastre seu</label>
-          <label style="margin-top: -20px !important;" for="chk" aria-hidden="true">PET</label>
+          <label for="chk" aria-hidden="true">Cadastre seu PET</label>
+    
 
           <div style="justify-content: center; padding: 20px; color: white"  *ngIf="!token">
             Você não está logado.  <a href="#" style="color: rgb(186, 0, 233);" (click)="redirect('login'); $event.preventDefault()">clique aqui para realizar seu login.</a>
@@ -17,7 +17,7 @@
             <input type="text" formControlName="breed" placeholder="Raça do Pet (Opcional)">
             <!-- <input type="text" formControlName="animalType" placeholder="Tipo de Animal" required> -->
             <div class="form-group" style="margin-top: -20px;">,
-                <select style="width: 66% !important;" id="petType" formControlName="petType">
+                <select style="width: 60% !important;" id="petType" formControlName="petType">
                   <option value="">Tipo de animal</option>
                   <option value="DOG">Cachorro</option>
                   <option value="CAT">Gato</option>

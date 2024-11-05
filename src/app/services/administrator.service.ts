@@ -11,12 +11,13 @@ export class AdministratorService {
   constructor(private http: HttpClient) {}
 
   listUsers(roleName: string, page: number, size: number): Observable<any> {
-    const url = `${this.apiUrl}/list-user/{roleName}?`;
+    const url = `${this.apiUrl}/list-user/`+ roleName;
     let params = new HttpParams();
     params = params.append('roleName', roleName); 
     params = params.append('page', page.toString());
     params = params.append('size', size.toString());
-
+    console.log(url)
+    console.log(params)
     return this.http.get(url, { params });
   }
   

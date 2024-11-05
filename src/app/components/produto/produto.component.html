@@ -1,0 +1,33 @@
+<!-- card-produto.component.html -->
+<div class="cabinet-card">
+    <div class="header-container" style="max-height: 50px;">
+      <h1>{{ product.name }}</h1>
+      <p>{{ product.description }}</p>
+    </div>
+    <div class="content-container">
+      <div style="padding-top: 50px;" class="image-container">
+        <img [src]="product.images[0]" style="width: 200px; height: 200px;" class="object-fit-xxl-contain border rounded" alt="Cabinet Image" (click)="openModal(product.image)">
+      </div>
+    </div>
+    <div class="details-container">
+      <!-- <select class="form-select form-select-md mb-3" [(ngModel)]="selectedModel" (ngModelChange)="onModelChange()" aria-label="Large select example">
+        <option value="Select SKU">Select SKU</option>
+        <option *ngFor="let model of product.models" [value]="model">{{ model }}</option>
+      </select> -->
+      <p class="price">Preço: ${{ product.price | number:'1.2-2' }}</p>
+    </div>
+    <p class="check success-message" *ngIf="produtoAdicionado">
+      Success
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+      </svg>
+    </p>
+    <button *ngIf="permissaoAdmin" type="button" class="btn btn-success" style="margin-top: 10px; margin-right: 15px; background-color: rgb(84, 37, 180);"  (click)="editarProduto()">Editar</button>
+    <button type="button" class="btn btn-success" style="margin-top: 10px;"  (click)="adicionarProduto()">Simular!</button>
+
+    <p *ngIf="showErrorMessage" class="error-message">Selecione um SKU para adicionar ao carrinho</p>
+  </div>
+  
+  
+
+  

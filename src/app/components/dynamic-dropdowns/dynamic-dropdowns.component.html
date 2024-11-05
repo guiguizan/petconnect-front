@@ -1,0 +1,21 @@
+<div class="container">
+    <select class="form-select form-select-md mb-3" title="Select the Line of Materials" aria-label="Large select example" (change)="onFirstDropdownChange($event)">
+      <option selected *ngIf="!selectedFirstDropdown">Select the Line of Materials</option>
+      <option *ngFor="let option of firstDropdownOptions" [value]="option.value" [selected]="selectedFirstDropdown === option.value">{{ option.label }}</option>
+    </select>
+  
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" (click)="toggleDropdown()">
+        {{ selectedSecondDropdown ? selectedSecondDropdown.label : 'Select Color' }}
+      </button>
+      <ul class="dropdown-menu" [class.show]="dropdownOpen" aria-labelledby="dropdownMenuButton">
+        <li *ngFor="let option of secondDropdownOptions" (click)="selectOption(option)">
+          <div class="dropdown-item">
+            <img [src]="option.image" alt="{{ option.label }}" class="color-image">
+            <span>{{ option.label }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

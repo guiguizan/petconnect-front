@@ -30,6 +30,14 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { PhoneMaskDirective } from './phone-mask.directive';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './sharedPages/navbar/navbar.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { ProdutosComponent } from './pages/produtos/produtos.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
+import { ProdutoComponent } from './components/produto/produto.component';
+import { DynamicDropdownsComponent } from './components/dynamic-dropdowns/dynamic-dropdowns.component';
+import { ProdutoFormComponent } from './components/produto-form/produto-form.component';
+
+
 
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra); 
@@ -51,7 +59,13 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
     UserListComponent,
     PhoneMaskDirective,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    CheckoutComponent,
+    ProdutosComponent,
+    CarrinhoComponent,
+    ProdutoComponent,
+    DynamicDropdownsComponent,
+    ProdutoFormComponent
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,7 @@
       <h1>PetConnect</h1>
       <h4 *ngIf="isAdmin" style="color: rgb(225, 0, 255); margin-left: 35%;">Visão admin</h4>
       
-   
+      <button (click)="toggleTheme()">Alternar Tema</button>
 
       <ul>
         <li class="nav-item"  [ngClass]="{'active': activeItem === 0}" (click)="setActive(0);">
@@ -57,12 +57,20 @@
             <span class="nav-text">Meu pet</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 3}" (click)="setActive(4)">
+        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 4}" (click)="setActive(4)">
           <b></b>
           <b></b>
           <a >
             <i class="fa fa-person-running nav-icon">Usuarios</i>
             <span class="nav-text">Usuarios</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 5}" (click)="setActive(5)">
+          <b></b>
+          <b></b>
+          <a >
+            <i class="fa fa-person-running nav-icon">Cadastrar produto</i>
+            <span class="nav-text">Cadastrar produto</span>
           </a>
         </li>
       </ul>
@@ -127,6 +135,15 @@
           </div>
        
         </div>
+
+
+        <div *ngIf="activeItem === 5" >
+          <div style="text-align: center; margin-top: 50px; margin-right: 5%;">
+          <app-produto-form></app-produto-form>
+        </div>
+       
+        </div>
+
 
         <div>
           <br><br><br>

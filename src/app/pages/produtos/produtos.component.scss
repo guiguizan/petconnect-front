@@ -1,0 +1,401 @@
+/* Jumbotron styles */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.main {
+  height: 100%!important;
+  font-family: "Open Sans", sans-serif;
+  background-color: #fafafa!important;
+}
+
+/* Barra de Progresso */
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100px;
+  background-color: rgba(255, 255, 255, 0.185); /* Cor de fundo com transparência */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 0;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  color: rgba(0, 0, 0, 0.534);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #cccccca2;
+  border-radius: 50%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.step p {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin: 0;
+  font-size: 14px;
+}
+
+.step.active .circle {
+  background-color: #f38c168f; /* Cor da etapa ativa */
+}
+
+.step.completed .circle {
+  background-color: #28a74662; /* Cor da etapa concluída */
+}
+
+.container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.jumbotron {
+  position:relative;
+  color: #fff;
+  padding-top: 12rem !important;
+  padding-bottom: 7.5rem !important;
+  padding: 30px 0;
+  text-align: center;
+  z-index: 1;
+  background: url('/assets/pets/vet/3.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.jumbotron::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #0f0c29e5;
+
+  backdrop-filter: blur(1px); /* Blur effect */
+  z-index: -1;
+}
+
+.jumbotron-heading {
+  font-size: 2.5em;
+  margin-bottom: 5px;
+}
+
+.lead {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.container > p {
+  color: #c9c9c9 !important;
+}
+
+.btn {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.primary {
+  background-color: rgb(187, 144, 74);
+}
+.primary:hover {
+  background-color: rgb(219, 175, 104);
+}
+
+.secondary {
+  background-color: #6c757d;
+}
+.secondary, .checkbox-btn:hover {
+  background-color: #919ca7;
+}
+
+/* Estilos para os botões como checkboxes */
+.checkbox-btn {
+  background-color: #5c6369;
+  color: white;
+
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.checkbox-btn.selected {
+  background-color: rgb(54, 134, 61);
+  color: rgb(255, 255, 255);
+}
+
+.checkbox-btn.selected:hover{
+  background-color: rgb(71, 151, 78);
+}
+
+.container-materials{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+
+/* Wave divider */
+.wave-divider {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(to right, #0d2039, #193253, #c7b698);
+}
+
+.wave-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: no-repeat center center;
+  background-size: cover;
+}
+
+/* Album section styles */
+.album {
+  padding: 50px 0;
+}
+
+.album .container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/* Container para o select e o input */
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px; /* Espaço entre os elementos */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha em telas menores */
+}
+
+/* Estilo para o select dropdown */
+.form-select {
+  flex: 1; /* Permite que o select ocupe uma parte proporcional do espaço disponível */
+  margin: 0; /* Remove margens desnecessárias */
+  border-radius: 5px; /* Bordas arredondadas */
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Oculta qualquer texto que ultrapasse os limites do dropdown */
+  text-overflow: ellipsis; /* Adiciona reticências ao texto que ultrapasse os limites */
+}
+
+/* Wrapper para o input */
+.input-wrapper {
+  flex: 2; /* Permite que o input ocupe uma parte maior do espaço disponível */
+}
+
+/* Estilo para o grupo de input */
+.input-group {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Garante que o input group ocupe toda a largura do seu contêiner pai */
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 10px; /* Espaçamento interno ajustado */
+  background-color: #e9ecef; /* Cor de fundo */
+  border: 1px solid #ced4da; /* Borda */
+  border-radius: 5px 0 0 5px; /* Bordas arredondadas */
+  height: 100%; /* Garante que o ícone tenha a mesma altura do input */
+  box-sizing: border-box; /* Inclui padding e border no tamanho total do elemento */
+}
+
+.form-control {
+  flex: 1;
+  padding: 10px; /* Espaçamento interno */
+  border: 1px solid #ced4da; /* Borda */
+  border-radius: 0 5px 5px 0; /* Bordas arredondadas */
+  margin-left: -1px; /* Remove a borda dupla entre o ícone e o input */
+  height: 100%; /* Garante que o input tenha a mesma altura do ícone */
+  box-sizing: border-box; /* Inclui padding e border no tamanho total do elemento */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column; /* Muda a direção dos itens para coluna em telas menores */
+  }
+
+  .form-select,
+  .input-wrapper {
+    width: 100%; /* Garante que os elementos ocupem 100% da largura disponível */
+    margin-bottom: 10px; /* Espaçamento entre os elementos na versão empilhada */
+  }
+
+  .input-group-text {
+    border-radius: 5px; /* Remove o arredondamento apenas para a borda esquerda */
+  }
+
+  .form-control {
+    border-radius: 5px; /* Remove o arredondamento apenas para a borda direita */
+    margin-left: 0; /* Remove a margem para a versão empilhada */
+  }
+}
+
+
+
+.container {
+  .row {
+    .col-sm-4 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-filter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.col-md-3 {
+  min-width: 200px; /* Define uma largura mínima para o contêiner */
+}
+
+/* Estilos para o botão Back to Top */
+#back-to-top {
+  position: fixed;
+  bottom: 20px; /* Ajuste a posição conforme necessário */
+  right: 80px;
+  display: none;
+  width: 50px;
+  height: 50px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 800;
+}
+
+#back-to-top:hover {
+  background-color: #919ca7;
+}
+
+/* Estilos para versão mobile */
+@media (max-width: 768px) {
+  #back-to-top {
+    bottom: 100px; /* Ajuste para que fique acima do botão de carrinho */
+    right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-container {
+    width: 80px;
+  }
+
+  .circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .step p {
+    font-size: 12px;
+  }
+}
+
+.app-card-produto {
+  width: 100%;
+}
+
+/* Alert */
+
+.alert-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1050;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.alert-warning {
+  background-color: #ffcc00;
+  color: #856404;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #000;
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  color: #000;
+  opacity: 0.75;
+}
+
+/* Estilo para o ícone de informação */
+.bi-info-circle {
+  font-size: 0.9em;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.bi-info-circle:hover {
+  color: #919ca7;
+}
+

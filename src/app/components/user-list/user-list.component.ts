@@ -23,8 +23,10 @@ export class UserListComponent implements OnInit {
   }
 
   loadUsers(ROLE: string): void {
+    console.log(ROLE, this.pageable.page, this.pageable.size)
     this.adminService.listUsers(ROLE, this.pageable.page, this.pageable.size).subscribe(
       (response: any) => {
+        console.log(response)
         this.users = response.content;
       },
       (error) => {

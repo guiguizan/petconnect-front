@@ -7,10 +7,17 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  userLogado: boolean = false;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+
+    const token = localStorage.getItem('token');
+    this.userLogado = token != null;
+
+      console.log(token)
+      console.log(this.userLogado)
     this.initNavbarLinks();
     this.initScrollTo();
     this.initMobileDropdowns(); // Adicione esta linha para inicializar os dropdowns

@@ -5,9 +5,11 @@ import { CadastroPetsComponent } from './pages/cadastro-pets/cadastro-pets.compo
 import { CpfFormatDirective } from './directives/cpf-format.directive';
 import { PerfilClienteComponent } from './pages/perfil-cliente/perfil-cliente.component';
 import { PerfilPetsComponent } from './pages/perfil-pets/perfil-pets.component';
-import { PainelComponent } from './pages/painel/painel.component';
+
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ProdutosComponent } from './pages/produtos/produtos.component';
+import { PainelComponent } from './pages/painel/painel.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path: 'painel', component: PainelComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'produtos', component: ProdutosComponent},
+  
   {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 

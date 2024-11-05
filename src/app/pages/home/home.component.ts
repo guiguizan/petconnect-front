@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle('Home - Domu Cabinets');
+    this.titleService.setTitle('Pet Connect');
     this.metaService.addTags([
       { name: 'description', content: 'Domu Cabinets offers top-notch carpentry services with over 20 years of experience. Contact us for your custom projects!' },
       { name: 'keywords', content: 'carpentry, custom cabinets, kitchen design, living room design, Domu Cabinets' },

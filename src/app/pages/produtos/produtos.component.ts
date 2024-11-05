@@ -1,6 +1,8 @@
 import { Component, EventEmitter, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { ConfirmDialog } from 'src/app/components/dialog/dialog.component';
 import { PageProductResponseDto, ProductResponseDto, ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-produtos',
@@ -35,7 +37,8 @@ export class ProdutosComponent implements OnInit {
     private meta: Meta,
     private title: Title,
     private productService: ProductService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private dialog: MatDialog
   ) {
     this.title.setTitle('Pet Connect');
     this.meta.addTags([
@@ -168,8 +171,18 @@ export class ProdutosComponent implements OnInit {
     this.productService.deleteProduct(event.product.id).subscribe(
       () => {
         console.log('Produto excluído com sucesso');
-        // Atualizar a lista de produtos ou a interface do usuário
-        this.loadProducts(); // Se você tiver um método para recarregar os produtos
+        
+        
+    
+
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+          width: '250px',
+          data: { message: 'Produto excluido com sucesso!' }
+        });
+        dialogRef.afterClosed().subscribe(() => {
+          this.loadProducts();
+        });
+
       },
       error => {
         console.error('Erro ao excluir o produto:', error);

@@ -74,20 +74,26 @@ export class ProductService {
   getAllProducts(
     page: number,
     size: number,
+    query?: string,
     sort?: string[]
   ): Observable<PageProductResponseDto> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-
+  
+    if (query) {
+      params = params.set('query', query);
+    }
+  
     if (sort && sort.length > 0) {
       sort.forEach((sortValue) => {
         params = params.append('sort', sortValue);
       });
     }
-
+  
     return this.http.get<PageProductResponseDto>(this.baseUrl, { params });
   }
+  
 
   // Create a new product with image upload
   createProduct(
@@ -95,18 +101,11 @@ export class ProductService {
     imageFile: File
   ): Observable<ProductResponseDto> {
     const formData = new FormData();
-
-    // Garantir que tags seja um array
-    const formattedProductData = {
-      ...productData,
-      tags: Array.isArray(productData.tags) ? productData.tags : [productData.tags]
-    };
-
-    // Convert product data to JSON string and append as 'product'
-    formData.append('product', JSON.stringify(formattedProductData));
-
-    // Append image file
-    formData.append('image', imageFile, imageFile.name);
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(productData)], { type: 'application/json' })
+    );
+    formData.append('image', imageFile);
 
     return this.http.post<ProductResponseDto>(this.baseUrl, formData);
   }
@@ -126,8 +125,7 @@ export class ProductService {
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-
-  // ProductService
+  
   updateProductWithImage(
     id: number,
     productData: InsertProductRequestDto,
@@ -145,7 +143,5 @@ export class ProductService {
 
     return this.http.put<ProductResponseDto>(`${this.baseUrl}/${id}`, formData);
   }
-
-
 
 }

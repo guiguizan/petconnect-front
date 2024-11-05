@@ -18,6 +18,7 @@ export class PainelComponent implements OnInit {
   filteredAppointments: any;
   isAdmin: boolean = false;
   isDarkTheme = false;
+  veterinarianAppointments: any;
 
   constructor(private appointmentService: AppointmentService, private router: Router, private dialog: MatDialog) {}
 
@@ -31,6 +32,10 @@ export class PainelComponent implements OnInit {
       this.isAdmin = false;
       this.loadAppointments();
     }
+  }
+
+  redirectProdutos(){
+    this.router.navigate(['/produtos']);
   }
 
   loadAdminAppointments() {
@@ -102,9 +107,11 @@ export class PainelComponent implements OnInit {
   }
 
   filterVeterinarianAppointments(): void {
-    this.filteredAppointments = this.appointments.filter(appointment => 
+    const veterinarianAppointments =  this.appointments.filter(appointment => 
       appointment.serviceType === 'VETERINARIAN'
     );
+    this.veterinarianAppointments = veterinarianAppointments;
+
   }
 
   logOut() {

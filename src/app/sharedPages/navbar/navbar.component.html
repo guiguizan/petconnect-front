@@ -1,13 +1,29 @@
 <header id="header" class="fixed-top">
   <div class="container d-flex align-items-center justify-content-between">
+    <!-- <a href="index.html"><img src="assets/pets/logo2.png" height="60px" alt="DomuCabinets Logo" title="DomuCabinets"></a>
+    <a href="index.html"><img src="assets/pets/logo.png"  width="200px" height="60px" alt="DomuCabinets Logo" title="DomuCabinets"></a> -->
 
-    <a href="index.html"><img src="assets/pets/logo.png" width="200px" height="60px" alt="DomuCabinets Logo" title="DomuCabinets"></a>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li>  <a href="/home"><img src="assets/pets/logo2.png" height="60px" alt="DomuCabinets Logo" title="DomuCabinets"></a></li>
+        <li> <a href="/home"><img src="assets/pets/logo.png"  width="200px" height="60px" alt="DomuCabinets Logo" title="DomuCabinets"></a></li>
+
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle" alt="Menu Navigation" title="Menu Navigation" (click)="toggleMobileNav()"></i>
+    </nav><!-- .navbar -->
+
+
 
     <nav id="navbar" class="navbar">
       <ul>
         <li><a class="nav-link scrollto" href="/home" alt="Home" title="Home">PÁGINA INICIAL</a></li>
         <li><a class="nav-link scrollto" href="/produtos" alt="Home" title="Home">PRODUTOS</a></li>
 
+        <div class="tema">
+
+          <input (click)="toggleTheme()" type="checkbox" hidden="hidden" id="username">
+          <label class="switch" for="username"></label>
+        </div>
         <!-- <li><a class="nav-link scrollto" href="/materials" alt="Materials" title="Materials">Materials</a></li> -->
 
 

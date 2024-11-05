@@ -29,6 +29,7 @@ export class ProdutosComponent implements OnInit {
   permissaoAdmin: boolean = false;
   userLogado: boolean = false;
   isDarkTheme: boolean = false;
+  animalType: string = '';
 
   constructor(
     private meta: Meta,
@@ -72,9 +73,10 @@ export class ProdutosComponent implements OnInit {
     this.isCadastroProduto = !this.isCadastroProduto;
   }
 
-  // Carregar produtos com paginação
   loadProducts() {
-    this.productService.getAllProducts(this.currentPage, this.pageSize).subscribe(
+    const query = this.animalType;
+  
+    this.productService.getAllProducts(this.currentPage, this.pageSize, query).subscribe(
       (data: PageProductResponseDto) => {
         this.products = data.content;
         this.filteredProducts = this.products;
@@ -86,6 +88,7 @@ export class ProdutosComponent implements OnInit {
       }
     );
   }
+  
 
   // Extraindo categorias dos produtos
   extractCategories() {
@@ -155,6 +158,28 @@ export class ProdutosComponent implements OnInit {
     this.abrirCadastroProduto()
   }
 
+  onProdutoSelecionadoExcluido(event: any) {
+    console.log(event)
+    this.produtoEdicao = event;
+    console.log(this.produtoEdicao);
+    this.saveState();
+  
+    // Chamar o método deleteProduct do serviço
+    this.productService.deleteProduct(event.product.id).subscribe(
+      () => {
+        console.log('Produto excluído com sucesso');
+        // Atualizar a lista de produtos ou a interface do usuário
+        this.loadProducts(); // Se você tiver um método para recarregar os produtos
+      },
+      error => {
+        console.error('Erro ao excluir o produto:', error);
+        // Você pode exibir uma mensagem de erro ao usuário aqui
+      }
+    );
+  }
+  
+
+
   onSearchQueryChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.pesquisa = inputElement.value;
@@ -189,6 +214,16 @@ export class ProdutosComponent implements OnInit {
   backToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  selectAnimalType(type: string){
+    this.step = 2;
+    this.saveState();
+    this.selectedBoxType = type;
+    this.animalType = type
+    this.loadProducts();
+    console.log(this.animalType)
+  }
+
 
   selectBoxType(type: string) {
     this.selectedBoxType = type;

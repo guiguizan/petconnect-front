@@ -3,6 +3,7 @@ import { ViewportScroller } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,11 @@ export class HomeComponent implements OnInit {
   contactForm: FormGroup;
   showMessage: boolean = false;
   successMessage: string = '';
+  userLogado: boolean = false;
 
   constructor(
     private viewportScroller: ViewportScroller,
+    private router: Router,
     private metaService: Meta,
     private titleService: Title,
     private fb: FormBuilder
@@ -31,6 +34,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.userLogado = token != null;
+    
     this.titleService.setTitle('Pet Connect');
     this.metaService.addTags([
       { name: 'description', content: 'Domu Cabinets offers top-notch carpentry services with over 20 years of experience. Contact us for your custom projects!' },
@@ -53,5 +59,14 @@ export class HomeComponent implements OnInit {
 
   onSendEmail(): void {
 
+  }
+
+  redirect(){
+    if(this.userLogado){
+      this.router.navigate(['/painel']);
+    }else{
+      this.router.navigate(['/login']);
+    }
+    
   }
 }

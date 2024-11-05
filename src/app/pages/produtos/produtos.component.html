@@ -1,5 +1,11 @@
-<app-navbar></app-navbar>
+
+
+<app-navbar    (toggleThemes)="toggleTheme()"></app-navbar>
 <main role="main" class="main">
+
+
+
+
   <div class="progress-container">
     <div class="progress-bar">
       <div class="step" [class.active]="step === 1" [class.completed]="step > 1">
@@ -16,12 +22,13 @@
   <!-- Step 1: Select Box Type -->
  
   <section class="jumbotron text-center" *ngIf="step >= 1">
+
     <div class="container">
       <h1 class="jumbotron-heading">Selecione seu pet</h1>
       <p class="lead text-muted">Com base no tipo de pet selecionaremos os melhores produtos que temos em nosso estoque. Disponíveis para compra em nosso ponto físico. Corra conhecer!</p>
       <div>
-        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'Melamine'" (click)="selectBoxType('Melamine')">Gato</button>
-        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'Plywood'" (click)="selectBoxType('Plywood')">cachorro</button>
+        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'gato'" (click)="selectAnimalType('gato')">Gato</button>
+        <button class="checkbox-btn" [class.selected]="selectedBoxType === 'cachorro'" (click)="selectAnimalType('cachorro')">Cachorro</button>
       </div>
     </div>
     <!-- Step 2: Select Line of Materials -->
@@ -52,6 +59,7 @@
   <br><br>
   <!-- Step 3: Select Products -->
   <div class="album">
+    
     <div class="container">
       <div class="filter-container">
         <!-- Filtro de categoria e pesquisa -->
@@ -68,30 +76,34 @@
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 6.5 0 1 1-11 0 5.5 6.5 0 0 1 11 0"></path>
               </svg>
             </span>
-            <input type="text" class="form-control" placeholder="Pesquise o produto..." (input)="onSearchQueryChange($event)">
+            <input type="text" style="width: 300px;" class="form-control" placeholder="Pesquise o produto..." (input)="onSearchQueryChange($event)">
          
-
+       
           </div>
         </div>
       </div>
   
+
       <div class="container text-center" *ngIf="hasFilteredProducts(); else noProducts">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-xxl-3 g-3">
-          <div *ngFor="let product of filteredProducts" class="col-md-4">
+          <div *ngFor="let product of filteredProducts" class="col-md-4"  style="margin: 30px">
+            
             <app-card-produto
+             
               (abriuCarrinho)="abreCarrinho($event)"
               [product]="product"
               (produtoSelecionado)="onProdutoSelecionado($event)"
-              (editProdutoSelecionado)="onProdutoSelecionadoEdit($event)">
+              (editProdutoSelecionado)="onProdutoSelecionadoEdit($event)"
+              (excluirProdutoSelecionado)="onProdutoSelecionadoExcluido($event)">
             </app-card-produto>
-            
+         
           </div>
         </div>
       </div>
   
       <ng-template #noProducts>
         <div class="alert alert-warning" role="alert">
-          Nenhum produto encontrado para "{{ pesquisa }}" na categoria "{{ selectedCategory }}".
+          Nenhum produto encontrado .
         </div>
       </ng-template>
   
@@ -108,8 +120,8 @@
 </main>
 
 
-<div>
+<!-- <div>
   <app-carrinho [atualizarCarrinho]="atualizarCarrinho" [produtoSelecionado]="produtoSelecionado" [abrirCarrinho]="abrirCarrinho"></app-carrinho>
-</div>
+</div> -->
 <!-- Alert container -->
 <div id="alert-container" class="alert-container"></div>

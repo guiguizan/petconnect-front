@@ -4,6 +4,7 @@
 
     body {
         transition: background-color 0.3s, color 0.3s;
+        background-color: var(--background-color) !important;
     }
   
     .main-menu,
@@ -31,6 +32,29 @@
         --button-background-color: #7937f3;
         --button-hover-background-color: #5e00cc;
         --button-text-color: #ffffff;
+        --image-background: #0f0c29e5;
+        
+
+        --background-color: #fafafa;
+        --text-color: #000000;
+        --primary-color: #bb904a;
+        --primary-hover-color: #dbaf68;
+        --secondary-color: #6c757d;
+        --secondary-hover-color: #919ca7;
+        --button-background-color: #5c6369;
+        --button-text-color: #ffffff;
+        --secondary-text-color: #aaa;
+        --progress-active-color: rgba(243, 140, 22, 0.56);
+        --progress-completed-color: rgba(40, 167, 70, 0.38);
+        --progress-circle-color: #cccccca2;
+        --input-background-color: #ffffff;
+        --input-text-color: #000000;
+        --input-border-color: #ced4da;
+        --alert-background-color: #ffcc00;
+        --alert-text-color: #856404;
+        --icon-color: #6c757d;
+        --icon-hover-color: #919ca7;
+        --image-background: #0f0c29e5;
     }
     
     .dark-theme {
@@ -43,5 +67,28 @@
         --button-background-color: #bb86fc;
         --button-hover-background-color: #9a6bd6;
         --button-text-color: #000000;
+        --image-background: #0f0c29e5;
+
+
+        --background-color: #121212;
+        --text-color: #ffffff;
+        --primary-color: #bb904a;
+        --primary-hover-color: #dbaf68;
+        --secondary-color: #919ca7;
+        --secondary-hover-color: #b0b9c3;
+        --button-background-color: #333333;
+        --button-text-color: #ffffff;
+        --secondary-text-color: #cccccc;
+        --progress-active-color: rgba(243, 140, 22, 0.56);
+        --progress-completed-color: rgba(40, 167, 70, 0.38);
+        --progress-circle-color: #333333;
+        --input-background-color: #1e1e1e;
+        --input-text-color: #ffffff;
+        --input-border-color: #555555;
+        --alert-background-color: #444444;
+        --alert-text-color: #ffffff;
+        --icon-color: #cccccc;
+        --icon-hover-color: #ffffff;
+        --image-background: #12052af6;
     }
     

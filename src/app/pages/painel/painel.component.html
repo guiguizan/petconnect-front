@@ -1,3 +1,4 @@
+
 <body>
   <main>
     <nav class="main-menu" >
@@ -22,7 +23,7 @@
       <h1>PetConnect</h1>
       <h4 *ngIf="isAdmin" style="color: rgb(225, 0, 255); margin-left: 35%;">Visão admin</h4>
       
-      <button (click)="toggleTheme()">Alternar Tema</button>
+      
 
       <ul>
         <li class="nav-item"  [ngClass]="{'active': activeItem === 0}" (click)="setActive(0);">
@@ -73,9 +74,36 @@
             <span class="nav-text">Cadastrar produto</span>
           </a>
         </li>
+
+        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 6}" (click)="setActive(6)">
+          <b></b>
+          <b></b>
+          <a >
+            <i class="fa fa-person-running nav-icon">Relatorio</i>
+            <span class="nav-text">Relatorio</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 1}"  (click)="redirectProdutos()">
+          <b></b>
+          <b></b>
+          <a >
+            <i class="fa fa-person-running nav-icon">Produtos</i>
+            <span class="nav-text">Produtos</span>
+          </a>
+        </li>
       </ul>
+      
       <button style="margin-left: 40%; margin-top: 10%;" (click)="logOut()" class="botao">sair</button>
+
+
+      <div class="tema">
+        <h5>LIGHT / DARK</h5>
+        <input (click)="toggleTheme()" type="checkbox" hidden="hidden" id="username">
+        <label class="switch" for="username"></label>
+      </div>
+      
     </nav>
+    
     <div class="content">
       <div class="left-content">
         <div *ngIf="activeItem === 0" class="activities" style="text-align: center; ">
@@ -90,7 +118,7 @@
           <h1 style="width: 80%; margin-left: 3%; margin-top: 4%;" class="desktop" data-shadow='dang!'>Veterinário</h1>
           <h1 style="width: 80%; margin-right: 10%; ; font-size: 3.5em;" class="responsive" data-shadow='dang!'>Veterinário</h1>
           <br>
-          <app-scheduler (editAppointmentEvent)="onEditAppointment($event)" [appointments]="filteredAppointments"></app-scheduler>
+          <app-scheduler (editAppointmentEvent)="onEditAppointment($event)" [appointments]="veterinarianAppointments"></app-scheduler>
         </div>
 
 
@@ -140,6 +168,16 @@
         <div *ngIf="activeItem === 5" >
           <div style="text-align: center; margin-top: 50px; margin-right: 5%;">
           <app-produto-form></app-produto-form>
+        </div>
+       
+        </div>
+
+        <div *ngIf="activeItem === 6" >
+          <div style="text-align: center; margin-top: 50px; margin-right: 5%;">
+          <app-analytics></app-analytics>
+
+          <br><br><br>
+          <app-appointment-monthly-summary></app-appointment-monthly-summary>
         </div>
        
         </div>

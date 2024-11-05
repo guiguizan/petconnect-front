@@ -2,11 +2,12 @@
 <app-navbar></app-navbar>
 <section class="home" id="home">
   <div class="container-home px-4 py-5 my-5 text-center" data-aos="fade-up">
-    <img class="d-block mx-auto mb-4" src="assets/pets/logo.png" alt="DomuCabinets Logo" title="DomuCabinets">
+    <img class="d-block mx-auto mb-4" src="assets/pets/logo.png" alt="pet connect Logo" title="PetConnect">
+    
     <h1 class="title" data-aos="fade-up" data-aos-delay="100">Ja agendou o cuidado com seu pet?</h1>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center" data-aos="fade-up" data-aos-delay="200">
-      <a class="btn btn-secondary btn-lg px-4 gap-3" href="/contact">CADASTRO</a>
-      <a class="btn btn-primary btn-lg px-4" href="/request-quote">AGENDAR AGORA</a>
+      <a class="btn btn-secondary btn-lg px-4 gap-3" href="/login">CADASTRO</a>
+      <a class="btn btn-primary btn-lg px-4" (click)="redirect()" href="/request-quote">AGENDAR AGORA</a>
     </div>
   </div>
 </section>

@@ -33,6 +33,7 @@ export class ProdutoComponent implements OnInit {
   @Output() abriuCarrinho: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() produtoSelecionado: EventEmitter<any> = new EventEmitter<any>();
   @Output() editProdutoSelecionado: EventEmitter<any> = new EventEmitter<any>();
+  @Output() excluirProdutoSelecionado: EventEmitter<any> = new EventEmitter<any>();
 
   private categoryValue: number = 1;
   produtoAdicionado: boolean = false;
@@ -102,6 +103,16 @@ export class ProdutoComponent implements OnInit {
     });
 
   }
+
+
+  excluirProduto() {
+    this.excluirProdutoSelecionado.emit({
+      product: this.product,
+      model: this.selectedModel,
+      totalPrice: this.totalPrice
+    });
+  }
+
 
   adicionarProduto() {
 

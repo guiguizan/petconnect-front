@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Output } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   userLogado: boolean = false;
+  isDarkTheme: boolean = false;
+  @Output() toggleThemes: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private router: Router) { }
 
@@ -113,6 +115,13 @@ export class NavbarComponent implements OnInit {
     toggleButton.classList.toggle('bi-x');
   }
 
+
+
+  
+  toggleTheme() {
+    this.toggleThemes.emit(true);
+  }
+
   // Mobile nav dropdowns activate
   private initMobileDropdowns(): void {
     this.on('click', '.navbar .dropdown > a', (e: Event) => {
@@ -134,4 +143,6 @@ export class NavbarComponent implements OnInit {
         }
       }
     }
+
+    
 )}}

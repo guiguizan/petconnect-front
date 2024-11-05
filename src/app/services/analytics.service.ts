@@ -1,4 +1,4 @@
-// analytics.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,6 +18,19 @@ export interface AppointmentSummaryResponseDto {
   overallTotalAppointments: number;
 }
 
+export interface MonthlyAppointmentsPercentageDto {
+  petType: string;
+  totalAppointments: number;
+  percentage: number;
+}
+
+export interface MonthlyAppointmentsGroupedDto {
+  month: string;
+  year: number;
+  totalAppointments: number;
+  appointments: MonthlyAppointmentsPercentageDto[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +39,13 @@ export class AnalyticsService {
 
   constructor(private http: HttpClient) {}
 
+  // Método existente
   getSummaryForAppointments(): Observable<AppointmentSummaryResponseDto> {
     return this.http.get<AppointmentSummaryResponseDto>(`${this.baseUrl}/summary-for-appointments`);
+  }
+
+  // Novo método
+  getAppointmentMonthlyPercentageSummary(): Observable<MonthlyAppointmentsGroupedDto[]> {
+    return this.http.get<MonthlyAppointmentsGroupedDto[]>(`${this.baseUrl}/appointment-monthly-percentage-summary`);
   }
 }

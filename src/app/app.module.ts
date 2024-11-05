@@ -36,6 +36,8 @@ import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { ProdutoComponent } from './components/produto/produto.component';
 import { DynamicDropdownsComponent } from './components/dynamic-dropdowns/dynamic-dropdowns.component';
 import { ProdutoFormComponent } from './components/produto-form/produto-form.component';
+import { AnalytcsComponent } from './components/analytcs/analytcs.component';
+import { AppointmentMonthlySummaryComponent } from './components/appointment-monthly-summary/appointment-monthly-summary.component';
 
 
 
@@ -65,7 +67,9 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
     CarrinhoComponent,
     ProdutoComponent,
     DynamicDropdownsComponent,
-    ProdutoFormComponent
+    ProdutoFormComponent,
+    AnalytcsComponent,
+    AppointmentMonthlySummaryComponent
   ],
   imports: [
     BrowserModule,

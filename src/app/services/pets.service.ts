@@ -38,8 +38,9 @@ export class PetService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    return this.http.put(`${this.petUrl}/{id}?idPet=${idPet}`, petData, { headers });
+    return this.http.put(`${this.petUrl}/${idPet}`, petData, { headers });
   }
+  
 
   // Delete pet by idPet
   deletePet(idPet: number): Observable<any> {

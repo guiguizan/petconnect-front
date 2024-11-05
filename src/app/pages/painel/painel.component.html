@@ -83,7 +83,7 @@
             <span class="nav-text">Relatorio</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="isAdmin" [ngClass]="{'active': activeItem === 1}"  (click)="redirectProdutos()">
+        <li class="nav-item"  (click)="redirectProdutos();setActive(0)">
           <b></b>
           <b></b>
           <a >
